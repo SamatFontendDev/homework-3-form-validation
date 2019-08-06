@@ -1,12 +1,15 @@
+/* eslint-disable max-statements */
 import React from 'react'
 import './Form.css'
 import NameError from './nameError'
+import LastNameError from './LastNameError'
+import PasswodError from './PasswodError'
 
 class Form extends React.Component {
     data = {
-        firstName: 'Samat',
-        lastName: 'Khabibyllin',
-        passwod: '123samat',
+        firstName: 's',
+        lastName: 'h',
+        passwod: '1'
     }
 
     state = {
@@ -18,10 +21,29 @@ class Form extends React.Component {
         passwodValid: true
     }
 
+    
     handleInput = e => {
         this.setState({
             [e.target.name]: e.target.value
         })
+
+        if (this.state.nameValid === false) {
+            this.setState({
+                nameValid: true
+            });
+        }
+
+        if (this.state.lastNameValid === false) {
+            this.setState({
+                lastNameValid: true
+            });
+        }
+        
+        if (this.state.passwodValid === false) {
+            this.setState({
+                passwodValid: true
+            });
+        }
     }
 
     handleSubmit = e => {
@@ -34,6 +56,28 @@ class Form extends React.Component {
         else {
             this.setState({
                 nameValid: false
+            })
+        }
+
+        if (this.state.lastName.length && this.state.lastName === this.data.lastName) {
+            this.setState({
+                lastNameValid: true
+            })
+        }
+        else {
+            this.setState({
+                lastNameValid: false
+            })
+        }
+
+        if (this.state.passwod.length && this.state.passwod === this.data.passwod) {
+            this.setState({
+                passwodValid: true
+            })
+        }
+        else {
+            this.setState({
+                passwodValid: false
             })
         }
     }
@@ -71,9 +115,7 @@ class Form extends React.Component {
                             value={lastName}
                             onChange={this.handleInput}
                         />
-                        <div className="field__error">
-                            <span className="field-error"></span>
-                        </div>
+                        <LastNameError hasEror={this.state.lastNameValid}/>
                     </div>
                     <div className="field">
                         <label htmlFor="passwod" className="field__label">
@@ -87,9 +129,7 @@ class Form extends React.Component {
                             value={passwod}
                             onChange={this.handleInput}
                         />
-                        <div className="field__error">
-                            <span className="field-error"></span>
-                        </div>
+                        <PasswodError hasEror={this.state.passwodValid} />
                     </div>
                     <div className="form__buttons">
                         <button className="button" type="submit">проверить</button>
