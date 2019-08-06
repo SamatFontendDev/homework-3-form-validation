@@ -5,6 +5,7 @@ import NameError from './nameError'
 import LastNameError from './LastNameError'
 import PasswodError from './PasswodError'
 
+
 class Form extends React.Component {
     data = {
         firstName: 's',
@@ -16,7 +17,10 @@ class Form extends React.Component {
         firstName: '',
         lastName: '',
         passwod: '',
-        nameValid: true,
+        nameValid: {
+            empty: true,
+            conformity: true
+        },
         lastNameValid: true,
         passwodValid: true
     }
@@ -27,35 +31,37 @@ class Form extends React.Component {
             [e.target.name]: e.target.value
         })
 
-        if (this.state.nameValid === false) {
-            this.setState({
-                nameValid: true
-            });
-        }
-
-        if (this.state.lastNameValid === false) {
-            this.setState({
-                lastNameValid: true
-            });
-        }
-        
-        if (this.state.passwodValid === false) {
-            this.setState({
-                passwodValid: true
-            });
-        }
+       this.setState({
+            nameValid: {
+                empty: true,
+                conformity: true
+            },
+            lastNameValid: true,
+            passwodValid: true
+        });
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        if (this.state.firstName.length && this.state.firstName === this.data.firstName) {
+        if (this.state.firstName.length) {
             this.setState({
-                nameValid: true
+                nameValid: {
+                    empty: true
+                }
+            })
+        } else if (this.state.firstName === this.data.firstName) {
+            this.setState({
+                nameValid: {
+                    conformity: true
+                }
             })
         }
         else {
             this.setState({
-                nameValid: false
+                nameValid: {
+                    empty: false,
+                    conformity: false
+                }
             })
         }
 
