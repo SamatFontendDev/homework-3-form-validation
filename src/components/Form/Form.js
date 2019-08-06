@@ -12,80 +12,85 @@ class Form extends React.Component {
     state = {
         firstName: '',
         lastName: '',
-        passwod: ''
+        passwod: '',
+        nameValid: true,
+        lastNameValid: true,
+        passwodValid: true
     }
 
-    handleFirstNameChange = e => {
+    handleInput = e => {
         this.setState({
-            firstName: e.target.value
-        })
-    }
-
-    handleLastNameChange = e => {
-        this.setState({
-            lastName: e.target.value
-        })
-    }
-
-    handlePasswodChange = e => {
-        this.setState({
-            passwod: e.target.value
+            [e.target.name]: e.target.value
         })
     }
 
     handleSubmit = e => {
-        e.prventDefault();
+        e.preventDefault();
+        if (this.state.firstName.length && this.state.firstName === this.data.firstName) {
+            this.setState({
+                nameValid: true
+            })
+        }
+        else {
+            this.setState({
+                nameValid: false
+            })
+        }
     }
 
+    
     render() {
         const { firstName, lastName, passwod } = this.state;
         return (
             <div className="app-container">
                 <form className="form" onSubmit={this.handleSubmit}>
                     <h1>Введите свои данные, агент</h1>
-                    <p className="field">
+                    <div className="field">
                         <label htmlFor="first-name" className="field__label">
                             <span className="field-label">Имя</span>
                         </label>
                         <input
+                            name="firstName"
                             id="first-name"
                             className="t-input-firstname field-input"
                             type="text"
                             value={firstName}
-                            onChange={this.handleFirstNameChange}
+                            onChange={this.handleInput}
                         />
-                        <NameError hasEror={this.state.firstName} />
-                    </p>
-                    <p className="field">
+                        <NameError hasEror={this.state.nameValid} />
+                    </div>
+                    <div className="field">
                         <label htmlFor="last-name" className="field__label">
                             <span className="field-label">Фамилия</span>
                         </label>
-                        <input 
+                        <input
+                            name="lastName" 
                             id="last-name" 
                             className="t-input-firstname field-input"
                             type="text"
                             value={lastName}
-                            onChange={this.handleLastNameChange}
+                            onChange={this.handleInput}
                         />
                         <div className="field__error">
                             <span className="field-error"></span>
                         </div>
-                    </p>
-                    <p className="field">
+                    </div>
+                    <div className="field">
                         <label htmlFor="passwod" className="field__label">
                             <span className="field-label">Пароль</span>
                         </label>
-                        <input 
+                        <input
+                            name="passwod"
                             id="passwod" 
                             className="t-input-firstname field-input" 
                             type="text"
                             value={passwod}
-                            onChange={this.handlePasswodChange}
+                            onChange={this.handleInput}
                         />
                         <div className="field__error">
                             <span className="field-error"></span>
                         </div>
-                    </p>
+                    </div>
                     <div className="form__buttons">
                         <button className="button" type="submit">проверить</button>
                     </div>

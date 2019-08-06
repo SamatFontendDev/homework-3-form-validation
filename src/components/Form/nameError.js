@@ -2,7 +2,7 @@ import React from 'react';
 
 class NameError extends React.Component {
     render() {
-        if (this.props.hasEror.length > 0) {
+        if (this.props.hasEror) {
             return null;
         } 
 
