@@ -2,22 +2,23 @@ import React from 'react';
 
 class NameError extends React.Component {
     render() {
-        if (this.props.hasEror.empty && this.props.hasEror.conformity) {
-            return null;
-        } else if (this.props.empty === false) {
+        if (this.props.hasError.empty && this.props.hasError.conformity) {
+            return null
+        }
+        else if (this.props.hasError.empty === false) {
             return (
                 <div className="field__error">
-                    <span className="field-error">Ошибка имени!</span>
-                </div>
-            )
-        } else if (this.props.conformity) {
-            return (
-                <div className="field__error">
-                    <span className="field-error">Ошибка совпадения!</span>
+                    <span className="t-error-firstname field-error">Введите имя!</span>
                 </div>
             )
         }
-        
+        else if (this.props.hasError.conformity === false) {
+            return (
+                <div className="field__error">
+                    <span className="t-error-firstname field-error">Имя неверно!</span>
+                </div>
+            )
+        }
     }
 }
 

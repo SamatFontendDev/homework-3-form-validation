@@ -4,13 +4,14 @@ import './Form.css'
 import NameError from './nameError'
 import LastNameError from './LastNameError'
 import PasswodError from './PasswodError'
+import BondImg from './assets/bond_approve.jpg'
 
 
 class Form extends React.Component {
     data = {
-        firstName: 's',
-        lastName: 'h',
-        passwod: '1'
+        firstName: 'James',
+        lastName: 'Bond',
+        passwod: '007'
     }
 
     state = {
@@ -21,8 +22,15 @@ class Form extends React.Component {
             empty: true,
             conformity: true
         },
-        lastNameValid: true,
-        passwodValid: true
+        lastNameValid: {
+            empty: true,
+            conformity: true
+        },
+        passwodValid: {
+            empty: true,
+            conformity: true
+        },
+        allRight: false
     }
 
     
@@ -36,55 +44,72 @@ class Form extends React.Component {
                 empty: true,
                 conformity: true
             },
-            lastNameValid: true,
-            passwodValid: true
+            lastNameValid: {
+                empty: true,
+                conformity: true
+            },
+            passwodValid: {
+                empty: true,
+                conformity: true
+            }
         });
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        if (this.state.firstName.length) {
+        if (this.state.firstName.length === 0) {
             this.setState({
                 nameValid: {
-                    empty: true
-                }
-            })
-        } else if (this.state.firstName === this.data.firstName) {
-            this.setState({
-                nameValid: {
-                    conformity: true
+                    empty: false
                 }
             })
         }
-        else {
+        else if (this.state.firstName !== this.data.firstName) {
             this.setState({
                 nameValid: {
-                    empty: false,
                     conformity: false
                 }
             })
         }
 
-        if (this.state.lastName.length && this.state.lastName === this.data.lastName) {
+        if (this.state.lastName.length === 0) {
             this.setState({
-                lastNameValid: true
+                lastNameValid: {
+                    empty: false
+                }
             })
         }
-        else {
+        else if (this.state.lastName !== this.data.lastName) {
             this.setState({
-                lastNameValid: false
+                lastNameValid: {
+                    conformity: false
+                }
             })
         }
 
-        if (this.state.passwod.length && this.state.passwod === this.data.passwod) {
+        if (this.state.passwod.length === 0) {
             this.setState({
-                passwodValid: true
+                passwodValid: {
+                    empty: false
+                }
             })
         }
-        else {
+        else if (this.state.passwod !== this.data.passwod) {
             this.setState({
-                passwodValid: false
+                passwodValid: {
+                    conformity: false
+                }
             })
+        }
+
+        if (this.state.firstName === this.data.firstName && this.state.lastName === this.data.lastName && this.state.passwod === this.data.passwod) {
+            this.setState({
+               allRight: true
+            })
+        } else {
+            this.setState({
+                allRight: false
+             })
         }
     }
 
@@ -93,7 +118,7 @@ class Form extends React.Component {
         const { firstName, lastName, passwod } = this.state;
         return (
             <div className="app-container">
-                <form className="form" onSubmit={this.handleSubmit}>
+                {!this.state.allRight && <form className="form" onSubmit={this.handleSubmit}>
                     <h1>Введите свои данные, агент</h1>
                     <div className="field">
                         <label htmlFor="first-name" className="field__label">
@@ -107,7 +132,7 @@ class Form extends React.Component {
                             value={firstName}
                             onChange={this.handleInput}
                         />
-                        <NameError hasEror={this.state.nameValid} />
+                        <NameError hasError={this.state.nameValid} />
                     </div>
                     <div className="field">
                         <label htmlFor="last-name" className="field__label">
@@ -121,7 +146,7 @@ class Form extends React.Component {
                             value={lastName}
                             onChange={this.handleInput}
                         />
-                        <LastNameError hasEror={this.state.lastNameValid}/>
+                        <LastNameError hasError={this.state.lastNameValid}/>
                     </div>
                     <div className="field">
                         <label htmlFor="passwod" className="field__label">
@@ -135,12 +160,13 @@ class Form extends React.Component {
                             value={passwod}
                             onChange={this.handleInput}
                         />
-                        <PasswodError hasEror={this.state.passwodValid} />
+                        <PasswodError hasError={this.state.passwodValid} />
                     </div>
                     <div className="form__buttons">
                         <button className="button" type="submit">проверить</button>
                     </div>
-                </form>
+                </form>}
+                {this.state.allRight && <div><img alt="James Bond" src={BondImg}/></div>}
             </div>
         )
     }
